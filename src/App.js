@@ -7,7 +7,7 @@ import {
   Route,
   Link} from 'react-router-dom';
 const StyledApp = styled.div`
-  background-color: #000000;
+  height: auto;
 `;
 
 const NavBar = styled.nav` 
