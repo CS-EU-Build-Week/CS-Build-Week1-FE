@@ -13,6 +13,10 @@ const StyledApp = styled.div`
 `;
 
 const NavBar = styled.nav` 
+  height: 60px;
+  width: auto;
+  background-color: #1976d2;
+  box-shadow: 5px;
   display: flex;
   justify-content: flex-end;
   text-decoration: none;
@@ -22,6 +26,7 @@ const NavBar = styled.nav`
     padding: 10px;
 
     a {
+      color: white;
       text-decoration: none;
     }
   }
