@@ -6,6 +6,8 @@ import {
   Switch,
   Route,
   Link} from 'react-router-dom';
+import SignUp  from './components/Register';
+
 const StyledApp = styled.div`
   height: auto;
 `;
@@ -37,12 +39,18 @@ function App() {
             <div>
               <Link to="/login">Login</Link>
             </div>
+            <div>
+              <Link to="/register">Register</Link>
+            </div>
         </NavBar>
         <Switch>
           <Route path="/about">
           </Route>
           <Route path="/login">
             <SignIn />
+          </Route>
+          <Route path="/register">
+          <SignUp />
           </Route>
         </Switch>
       </StyledApp>
