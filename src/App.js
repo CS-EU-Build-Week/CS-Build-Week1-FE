@@ -15,7 +15,7 @@ const StyledApp = styled.div`
 const NavBar = styled.nav` 
   height: 60px;
   width: auto;
-  background-color: #1976d2;
+  background-color: #3F51B5;
   box-shadow: 5px;
   display: flex;
   justify-content: flex-end;
