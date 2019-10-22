@@ -6,7 +6,9 @@ import {
   Switch,
   Route,
   Link} from 'react-router-dom';
-
+const StyledApp = styled.div`
+  background-color: #000000;
+`;
 
 const NavBar = styled.nav` 
   display: flex;
@@ -27,7 +29,7 @@ const NavBar = styled.nav`
 function App() {
   return (
     <Router>
-      <div className="App">
+      <StyledApp>
       <NavBar>
             <div>
               <Link to="/about">About</Link>
@@ -43,7 +45,7 @@ function App() {
             <SignIn />
           </Route>
         </Switch>
-      </div>
+      </StyledApp>
     </Router>
   );
 }
