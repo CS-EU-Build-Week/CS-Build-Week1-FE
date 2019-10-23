@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Register from './Register';
+import axios from 'axios';
+import { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -52,8 +55,33 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignIn() {
+
+const SignIn = props => {
   const classes = useStyles();
+  const [userCredentials, setUser] = useState({
+    username: "",
+    password: ""
+  });
+
+  const validateForm = () => {
+    return userCredentials.username.length > 1 && userCredentials.password.length > 7;
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    axios
+      .post("https://lambda-mud-test.herokuapp.com/api/login/", userCredentials)
+      .then(res => {
+        localStorage.setItem("key", res.data.key);
+        props.history.push("/game");
+      })
+      .catch(err => console.log(err));
+
+    setUser({
+      username: "",
+      password: ""
+    });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -65,16 +93,18 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            value={userCredentials.username}
+            onChange={e => setUser({ ...userCredentials, username: e.target.value })}
+            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -86,6 +116,8 @@ export default function SignIn() {
             label="Password"
             type="password"
             id="password"
+            value={userCredentials.password}
+            onChange={e => setUser({ ...userCredentials, password: e.target.value })}
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -98,6 +130,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!validateForm()}
           >
             Sign In
           </Button>
@@ -121,3 +154,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default withRouter(SignIn);
