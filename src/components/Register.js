@@ -75,7 +75,7 @@ const SignUp = props => {
     e.preventDefault();
     setError("");
     axios
-      .post("https://lambda-mud-test.herokuapp.com/api/registration/", userCredentials)
+      .post("https://django-mud-app.herokuapp.com/api/registration", userCredentials)
       .then(res => {
         console.log(res);
         localStorage.setItem("key", res.data.key);
