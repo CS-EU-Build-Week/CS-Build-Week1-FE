@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import SignIn from '../components/SignIn';
+import { withRouter } from "react-router-dom";
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -53,8 +55,47 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SignUp() {
+const SignUp = props => {
   const classes = useStyles();
+  const [userCredentials, setUser] = useState({
+    username: "",
+    password1: "",
+    password2: ""
+  });
+  const [error, setError] = useState("");
+  const validateForm = () => {
+    return (
+      userCredentials.username.length > 1 &&
+      userCredentials.password1.length > 7 &&
+      userCredentials.password2.length > 7
+    );
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    setError("");
+    axios
+      .post("https://django-mud-app.herokuapp.com/api/registration", userCredentials)
+      .then(res => {
+        console.log(res);
+        localStorage.setItem("key", res.data.key);
+        props.history.push("/login");
+      })
+      .catch(err => {
+        //debugger;
+        setError(err.response.data.password1);
+        setTimeout(() => {
+          setError("");
+        }, 2500);
+      });
+      setUser({
+      username: "",
+      password1: "",
+      password2: ""
+    });
+  };
+
+
 
   return (
     <Container component="main" maxWidth="xs">
@@ -66,29 +107,20 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
+            
+            <Grid item xs={12}>
+            <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                value={userCredentials.username}
+                onChange={e => setUser({ ...userCredentials, username: e.target.value })}
               />
             </Grid>
             <Grid item xs={12}>
@@ -96,22 +128,27 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
+                name="password1"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={userCredentials.password1}
+                onChange={e => setUser({ ...userCredentials, password1: e.target.value })}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password2"
+                label="Confirm Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={userCredentials.password2}
+                onChange={e => setUser({ ...userCredentials, password2: e.target.value })}
               />
             </Grid>
           </Grid>
@@ -121,8 +158,9 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={!validateForm()}
           >
-            Sign Up
+            Register
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -131,6 +169,7 @@ export default function SignUp() {
               </Link>
             </Grid>
           </Grid>
+          {error && <p style={{ color: "darkred" }}>{error}</p>}
         </form>
       </div>
       <Box mt={5}>
@@ -138,4 +177,5 @@ export default function SignUp() {
       </Box>
     </Container>
   );
-}
+};
+export default withRouter(SignUp);

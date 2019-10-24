@@ -7,6 +7,7 @@ import {
   Route,
   Link} from 'react-router-dom';
 import SignUp  from './components/Register';
+import PrivateRoute from './auth/PrivateRoute';
 
 const StyledApp = styled.div`
   height: auto;
@@ -38,6 +39,9 @@ function App() {
     <Router>
       <StyledApp>
       <NavBar>
+      <div>
+              <Link to="/game">Game</Link>
+            </div>
             <div>
               <Link to="/about">About</Link>
             </div>
@@ -49,6 +53,8 @@ function App() {
             </div>
         </NavBar>
         <Switch>
+        <PrivateRoute path="/game">
+          </PrivateRoute>
           <Route path="/about">
           </Route>
           <Route path="/login">
