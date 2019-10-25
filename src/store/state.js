@@ -2,7 +2,7 @@ import { useReducer, useEffect } from 'react';
 import generate from 'generate-maze';
 import axiosWithAuth from '../auth/improvedAxios';
 
-const token = 'Token ' + localStorage.getItem('key');
+const token = 'Token ' + localStorage.getItem('token');
 const headers = {
   headers: { 'Content-Type': 'application/JSON', Authorization: token }
 };
@@ -58,7 +58,6 @@ const useMaze = () => {
     axiosWithAuth()
       .get('https://lambda-mud-test.herokuapp.com/api/adv/init/', headers)
       .then(res => {
-        debugger
         console.log(res.data);
         dispatch({ type: ONLOAD, payload: res.data });
       })
@@ -88,6 +87,7 @@ const useMaze = () => {
           headers
         )
         .then(res => {
+            console.log(res.data);
           dispatch({ type: SUCCESS, payload: res.data });
         });
     };
