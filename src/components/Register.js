@@ -75,7 +75,7 @@ const SignUp = props => {
     e.preventDefault();
     setError("");
     axios
-      .post("https://lambda-mud-game-sny.herokuapp.com/api/registration/", userCredentials)
+      .post("https://lambda-mud-test.herokuapp.com/api/registration/", userCredentials)
       .then(res => {
         console.log(res);
         localStorage.setItem("token", res.data.key);
