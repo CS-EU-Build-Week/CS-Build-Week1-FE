@@ -1,6 +1,7 @@
 import React from 'react';
 import SignIn from './components/SignIn';
 import styled from 'styled-components';
+import Game from './components/Game';
 import { 
   BrowserRouter as Router,
   Switch,
@@ -54,6 +55,7 @@ function App() {
         </NavBar>
         <Switch>
         <PrivateRoute path="/game">
+            <Game />
           </PrivateRoute>
           <Route path="/about">
           </Route>

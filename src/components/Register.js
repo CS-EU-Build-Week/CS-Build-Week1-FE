@@ -75,15 +75,15 @@ const SignUp = props => {
     e.preventDefault();
     setError("");
     axios
-      .post("https://django-mud-app.herokuapp.com/api/registration", userCredentials)
+      .post("https://lambda-mud-game-sny.herokuapp.com/api/registration/", userCredentials)
       .then(res => {
         console.log(res);
-        localStorage.setItem("key", res.data.key);
-        props.history.push("/login");
+        localStorage.setItem("token", res.data.key);
+        props.history.push("/game");
       })
       .catch(err => {
-        //debugger;
-        setError(err.response.data.password1);
+        console.log(err);
+        setError(err);
         setTimeout(() => {
           setError("");
         }, 2500);
@@ -131,7 +131,7 @@ const SignUp = props => {
                 name="password1"
                 label="Password"
                 type="password"
-                id="password"
+                id="password1"
                 autoComplete="current-password"
                 value={userCredentials.password1}
                 onChange={e => setUser({ ...userCredentials, password1: e.target.value })}
@@ -145,7 +145,7 @@ const SignUp = props => {
                 name="password2"
                 label="Confirm Password"
                 type="password"
-                id="password"
+                id="password2"
                 autoComplete="current-password"
                 value={userCredentials.password2}
                 onChange={e => setUser({ ...userCredentials, password2: e.target.value })}

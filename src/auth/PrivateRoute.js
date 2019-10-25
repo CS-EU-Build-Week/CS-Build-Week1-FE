@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 export default function PrivateRoute({ component: Component, ...rest }) {
-  const token = localStorage.getItem("key") || null;
+  const token = localStorage.getItem("token") || null;
   return (
     <Route
       {...rest}

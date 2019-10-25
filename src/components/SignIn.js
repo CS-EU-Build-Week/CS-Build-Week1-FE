@@ -70,9 +70,9 @@ const SignIn = props => {
   const handleSubmit = e => {
     e.preventDefault();
     axios
-      .post("https://django-mud-app.herokuapp.com/api/login", userCredentials)
+      .post("https://lambda-mud-game-sny.herokuapp.com/api/login/", userCredentials)
       .then(res => {
-        localStorage.setItem("key", res.data.key);
+        localStorage.setItem("token", res.data.key);
         props.history.push("/game");
       })
       .catch(err => console.log(err));
