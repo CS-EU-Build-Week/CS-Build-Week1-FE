@@ -31,8 +31,8 @@ const reducer = (state, { type, payload }) => {
         return { ...state, x: min(state.maze.length, ++state.x) };
       if (payload === 'ArrowDown' && !cell.bottom)
         return { ...state, y: min(state.maze.length, ++state.y) };
-    } 
-    break
+    }
+    
     case SUCCESS:
       return { ...state, directions: payload };
 
