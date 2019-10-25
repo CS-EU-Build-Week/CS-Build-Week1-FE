@@ -32,7 +32,7 @@ const reducer = (state, { type, payload }) => {
       if (payload === 'ArrowDown' && !cell.bottom)
         return { ...state, y: min(state.maze.length, ++state.y) };
     } 
-
+    break
     case SUCCESS:
       return { ...state, directions: payload };
 
@@ -56,7 +56,7 @@ const useMaze = () => {
     const maze = generate(30);
 
     axiosWithAuth()
-      .get('https://lambda-mud-game-sny.herokuapp.com/api/adv/init/', headers)
+      .get('https://lambda-mud-test.herokuapp.com/api/adv/init/', headers)
       .then(res => {
         debugger
         console.log(res.data);
@@ -81,7 +81,7 @@ const useMaze = () => {
 
       axiosWithAuth()
         .post(
-          'https://lambda-mud-game-sny.herokuapp.com/api/adv/move/',
+          'https://lambda-mud-test.herokuapp.com/api/adv/move/',
           {
             direction
           },
