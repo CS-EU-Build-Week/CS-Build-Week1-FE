@@ -30,7 +30,7 @@ export const StyledDashBoard = styled.div`
   flex-direction: column;
   height: 70vh;
   justify-content: space-around;
-  color: #fff;
+  color: #0000ff;
 
   button {
     margin: 10px auto;
